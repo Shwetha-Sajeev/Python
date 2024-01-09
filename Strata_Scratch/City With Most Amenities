@@ -1,0 +1,13 @@
+Airbnb
+Hard
+
+You're given a dataset of searches for properties on Airbnb. For simplicity, let's say that each search result (i.e., each row) represents a unique host. Find the city with the most amenities across all their host's properties. Output the name of the city.
+
+import pandas as pd
+import numpy as np
+
+df = airbnb_search_details
+df['amenities_count'] = df['amenities'].str.count(',')+1
+grouped_asd = df.groupby('city',as_index=False).agg({'amenities_count':'sum'})
+max_city = grouped_asd[grouped_asd['amenities_count'] == max(grouped_asd['amenities_count'])]['city'].tolist()
+result = max_city
