@@ -1,0 +1,9 @@
+Yelp
+Medium
+
+Find the top business categories based on the total number of reviews. Output the category along with the total number of reviews. Order by total reviews in descending order.
+
+import pandas as pd
+
+result = yelp_business[['review_count', 'categories']].set_index('review_count').apply(lambda x: x.str.split(';').explode()).reset_index()
+result = result.groupby(['categories'])['review_count'].sum().to_frame('total_reviews').reset_index().sort_values('total_reviews', ascending=False)
