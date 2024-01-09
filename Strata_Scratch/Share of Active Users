@@ -1,0 +1,8 @@
+Meta/Facebook
+Easy
+
+Output share of US users that are active. Active users are the ones with an "open" status in the table.
+
+result = fb_active_users[fb_active_users['country'] == 'USA'].groupby('status')['user_id'].count().to_frame(
+    'user_count')
+result = result.loc['open'] / result['user_count'].sum()
