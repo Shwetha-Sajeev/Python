@@ -1,0 +1,28 @@
+ActiveCampaign
+Amazon
+Hard
+
+You have a table of in-app purchases by user. Users that make their first in-app purchase are placed in a marketing campaign where they see call-to-actions for more in-app purchases. Find the number of users that made additional in-app purchases due to the success of the marketing campaign.
+
+
+The marketing campaign doesn't start until one day after the initial in-app purchase so users that only made one or multiple purchases on the first day do not count, nor do we count users that over time purchase only the products they purchased on the first day.
+
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+# users who meet campaign criteria
+users_impacted_by_campaign = marketing_campaign.groupby('user_id')['created_at', 'product_id'].nunique().add_prefix(
+    'cnt_').reset_index()
+users_impacted_by_campaign = users_impacted_by_campaign[
+    (users_impacted_by_campaign["cnt_created_at"] > 1) & (users_impacted_by_campaign["cnt_product_id"] > 1)]
+
+# #products not meeting the campaign criteria
+marketing_campaign['user_product'] = marketing_campaign['user_id'].map(str) + "_" + marketing_campaign[
+    'product_id'].map(str)
+marketing_campaign['created_at'] = pd.to_datetime(marketing_campaign['created_at'])
+marketing_campaign['first_order'] = marketing_campaign.groupby('user_id')['created_at'].transform('min')
+first_order = marketing_campaign[marketing_campaign['created_at'] == marketing_campaign['first_order']]
+
+result = marketing_campaign[(marketing_campaign['user_id'].isin(users_impacted_by_campaign['user_id'])) & (
+    ~marketing_campaign['user_product'].isin(first_order['user_product']))]['user_id'].nunique()
