@@ -1,0 +1,12 @@
+Walmart
+Best Buy
+Dropbox
+Medium
+
+Find employees who are earning more than their managers. Output the employee's first name along with the corresponding salary.
+
+import pandas as pd
+import numpy as np
+
+merged = pd.merge(employee,employee, left_on = 'manager_id', right_on = 'id')
+result = merged[merged['salary_x'] > merged['salary_y']][['first_name_x','salary_x']]
