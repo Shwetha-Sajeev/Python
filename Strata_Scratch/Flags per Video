@@ -1,0 +1,10 @@
+Netflix
+Google
+Medium
+
+For each video, find how many unique users flagged it. A unique user can be identified using the combination of their first name and last name. Do not consider rows in which there is no flag ID.
+
+result = user_flags[user_flags["flag_id"].notnull()]
+result["username"] = result["user_firstname"].astype(str) + " " + result["user_lastname"].astype(str)
+result = result.groupby(by="video_id")["username"].nunique().reset_index()
+result = result.rename(columns={"username": "num_unique_users"})
