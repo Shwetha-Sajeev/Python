@@ -1,0 +1,26 @@
+Shopify
+Amazon
+Medium
+
+Find the customer with the highest daily total order cost between 2019-02-01 to 2019-05-01. If customer had more than one order on a certain day, sum the order costs on daily basis. Output customer's first name, total cost of their items, and the date.
+
+
+For simplicity, you can assume that every first name in the dataset is unique.
+
+import pandas as pd
+import numpy as np
+
+merge = pd.merge(customers, orders, left_on="id", right_on="cust_id")
+merge["order_date"] = merge["order_date"].apply(pd.to_datetime)
+order_date = merge[merge["order_date"].between("2019-02-1", "2019-05-1")]
+result = (
+    order_date.groupby(["first_name", "order_date"])["total_order_cost"]
+    .sum()
+    .to_frame("max_cost")
+    .reset_index()
+)
+result = result[result.max_cost == result.max_cost.max()]
+result["order_date"] = pd.to_datetime(
+    result["order_date"], format="%Y-%m-%d"
+).dt.strftime("%Y-%m-%d")
+result
