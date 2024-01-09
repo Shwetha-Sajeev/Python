@@ -1,0 +1,15 @@
+Meta/Facebook
+Medium
+
+Calculate the percentage of spam posts in all viewed posts by day. A post is considered a spam if a string "spam" is inside keywords of the post. Note that the facebook_posts table stores all posts posted by users. The facebook_post_views table is an action table denoting if a user has viewed a post.
+
+import pandas
+
+facebook_posts['is_spam'] = facebook_posts.post_keywords.str.contains('spam')
+facebook_posts['is_spam'] = facebook_posts['is_spam'].apply(lambda x: 1 if x == True else 0)
+result = facebook_post_views.merge(facebook_posts[['post_id', 'post_date', 'is_spam']], how='left', on='post_id')
+result = result.groupby('post_date').agg({'is_spam': ['sum', 'count']}).reset_index()
+result.columns = ['post_date', 'spam_sum', 'post_count']
+result['spam_share'] = (result.spam_sum / result.post_count)*100
+result.drop(['spam_sum', 'post_count'], axis=1, inplace=True)
+result
