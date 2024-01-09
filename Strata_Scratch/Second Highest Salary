@@ -1,0 +1,13 @@
+Dropbox
+Amazon
+Medium
+
+Find the second highest salary of employees.
+
+import pandas as pd
+import numpy as np
+
+distinct_salary = employee.drop_duplicates(subset = 'salary')
+distinct_salary['rnk'] = distinct_salary['salary'].rank(method='dense', ascending=False)
+result = distinct_salary[distinct_salary.rnk == 2][['salary']]
+
