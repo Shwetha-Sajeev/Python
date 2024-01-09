@@ -1,0 +1,11 @@
+Google
+Medium
+
+Find the number of times the words 'bull' and 'bear' occur in the contents. We're counting the number of times the words occur so words like 'bullish' should not be included in our count.
+Output the word 'bull' and 'bear' along with the corresponding number of occurrences.
+
+import pandas as pd
+import numpy as np
+
+data = {'word': ['bull','bear'],'netry': [google_file_store.contents.str.count(" bull ").sum(),google_file_store.contents.str.count(" bear ").sum()]}
+result = pd.DataFrame(data, columns = ['word', 'netry'])
