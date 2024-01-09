@@ -1,0 +1,12 @@
+Asana
+Twitter
+Medium
+
+
+Find the employee with the highest salary per department.
+Output the department name, employee's first name along with the corresponding salary.
+
+import pandas as pd
+import numpy as np
+
+result = employee[employee.groupby('department')['salary'].transform('max') == employee['salary']][['department','first_name','salary']]
