@@ -1,0 +1,30 @@
+Apple
+Google
+Hard
+
+Find the number of Apple product users and the number of total users with a device and group the counts by language. Assume Apple products are only MacBook-Pro, iPhone 5s, and iPad-air. Output the language along with the total number of Apple users and users with any device. Order your results based on the number of total users in descending order.
+
+import pandas as pd
+import numpy as np
+
+merged = pd.merge(playbook_events, playbook_users, on="user_id")
+mac_device = ["macbook pro", "iphone 5s", "ipad air"]
+df = (
+    merged[merged["device"].isin(mac_device)]
+    .groupby("language")["user_id"]
+    .nunique()
+    .to_frame("n_apple_users")
+)
+
+result = (
+    merged.groupby(["language"])["user_id"]
+    .nunique()
+    .rename("n_total_users")
+    .reset_index()
+)
+
+result.merge(df, how="outer", left_on="language", right_on="language").fillna(
+    0
+).sort_values("n_total_users", ascending=False)[
+    ["language", "n_apple_users", "n_total_users"]
+]
