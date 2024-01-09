@@ -1,0 +1,15 @@
+Meta/Facebook
+Medium
+
+Find the popularity percentage for each user on Meta/Facebook. The popularity percentage is defined as the total number of friends the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100.
+Output each user along with their popularity percentage. Order records in ascending order by user id.
+The 'user1' and 'user2' column are pairs of friends.
+
+import pandas as pd
+import numpy as np
+
+concatvalues =len(np.unique(np.concatenate([facebook_friends.user1.values,facebook_friends.user2.values])))
+revert = facebook_friends.rename(columns= {'user1':'user2','user2':'user1'})
+final = pd.concat([facebook_friends, revert],sort = False).drop_duplicates()
+result = final.groupby('user1').size().to_frame('count').reset_index()
+result['popularity_percent'] = 100*(result['count'] /concatvalues)
