@@ -1,0 +1,13 @@
+City of San Francisco
+Medium
+
+Find the average total compensation based on employee titles and gender. Total compensation is calculated by adding both the salary and bonus of each employee. However, not every employee receives a bonus so disregard employees without bonuses in your calculation. Employee can receive more than one bonus.
+Output the employee title, gender (i.e., sex), along with the average total compensation.
+
+import pandas as pd
+import numpy as np
+
+sf_bonus_summary = sf_bonus.groupby(['worker_ref_id'])['bonus'].sum().to_frame('bonus').reset_index()
+merged_df = pd.merge(sf_employee,sf_bonus_summary,left_on='id',right_on='worker_ref_id')
+merged_df['avg_total_comp'] = merged_df['salary'] + merged_df['bonus']
+result = merged_df.groupby(['employee_title','sex'])['avg_total_comp'].mean().reset_index()
