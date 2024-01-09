@@ -1,0 +1,26 @@
+Amazon
+Easy
+
+Find the number of workers by department who joined in or after April.
+
+
+Output the department name along with the corresponding number of workers.
+
+
+Sort records based on the number of workers in descending order.
+
+import pandas as pd
+import numpy as np
+import datetime as dt
+
+worker["joining_date"] = pd.to_datetime(worker["joining_date"])
+worker["month"] = worker["joining_date"].dt.month
+
+april_df = worker.loc[worker["month"] >= 4]
+result = (
+    april_df.groupby(["department"])
+    .size()
+    .to_frame("num_workers")
+    .sort_values(by="num_workers", ascending=False)
+    .reset_index()
+)
