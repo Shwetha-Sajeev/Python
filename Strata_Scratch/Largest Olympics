@@ -1,0 +1,13 @@
+ESPN
+Easy
+
+Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in the 'games' column. Output the Olympics along with the corresponding number of athletes.
+
+import pandas as pd
+import numpy as np
+
+result = olympics_athletes_events.groupby(['games'])['name'].nunique().to_frame(
+'athletes_count').reset_index().sort_values('athletes_count', ascending=False)
+
+
+result = result[result['athletes_count']==result['athletes_count'].max()]
