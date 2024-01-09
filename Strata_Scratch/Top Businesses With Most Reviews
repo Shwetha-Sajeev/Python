@@ -1,0 +1,10 @@
+Yelp
+Easy
+
+Find the top 5 businesses with most reviews. Assume that each row has a unique business_id such that the total reviews for each business is listed on each row. Output the business name along with the total number of reviews and order your results by the total reviews in descending order.
+
+import pandas as pd
+import numpy as np
+
+yelp_business['rank'] = yelp_business['review_count'].rank(ascending=False)
+result = yelp_business[yelp_business['rank']<=5][['name', 'review_count']].sort_values(by='review_count', ascending=False)
