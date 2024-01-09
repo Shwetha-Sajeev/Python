@@ -1,0 +1,10 @@
+Apple
+Dell
+Microsoft
+Easy
+
+Write a query that returns the number of unique users per client per month
+
+import pandas as pd
+
+result = fact_events.groupby([fact_events['client_id'], fact_events['time_id'].dt.month])['user_id'].nunique().reset_index()
