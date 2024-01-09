@@ -1,0 +1,13 @@
+General Assembly
+Kaplan
+Google
+Medium
+
+Output ids of students with a median score from the writing SAT.
+
+import pandas as pd
+import numpy as np
+
+sat_scores['writing_percentile'] = sat_scores['sat_writing'].rank(axis = 0 , pct = True)
+sat_scores['writing_percentile'] = (sat_scores['writing_percentile']*100).apply(np.floor)
+result = sat_scores[sat_scores['writing_percentile'] == 50][['student_id']]
