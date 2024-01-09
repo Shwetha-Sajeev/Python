@@ -1,0 +1,14 @@
+Microsoft
+Amazon
+Easy
+
+Find the number of employees working in the Admin department that joined in April or later.
+
+import pandas as pd
+import numpy as np
+import datetime as dt
+
+worker["joining_date"] = pd.to_datetime(worker["joining_date"])
+worker["month"] = worker["joining_date"].dt.month
+april_df = worker.loc[worker["month"] >= 4]
+result = april_df[april_df["department"] == "Admin"]["department"].count()
