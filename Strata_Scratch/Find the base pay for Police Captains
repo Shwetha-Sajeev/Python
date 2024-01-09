@@ -1,0 +1,10 @@
+City of San Francisco
+Easy
+
+Find the base pay for Police Captains.
+Output the employee name along with the corresponding base pay.
+
+import pandas as pd
+import numpy as np
+
+result =sf_public_salaries[(sf_public_salaries['jobtitle'].str.contains('CAPTAIN', case = False))&(sf_public_salaries['jobtitle'].str.contains('POLICE', case = False))][['employeename','basepay']]
