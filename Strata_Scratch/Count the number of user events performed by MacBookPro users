@@ -1,0 +1,12 @@
+Apple
+Easy
+
+Count the number of user events performed by MacBookPro users.
+Output the result along with the event name.
+Sort the result based on the event count in the descending order.
+
+import pandas as pd
+import numpy as np
+
+macbook_device = playbook_events[playbook_events['device']=='macbook pro']
+result = macbook_device.groupby(['event_name']).size().to_frame('size').reset_index().sort_values(['size'], ascending= False).rename(columns={"size": "event_count"})
