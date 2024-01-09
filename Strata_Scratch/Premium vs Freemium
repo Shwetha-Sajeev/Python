@@ -1,0 +1,17 @@
+Microsoft
+Hard
+
+Find the total number of downloads for paying and non-paying users by date. Include only records where non-paying customers have more downloads than paying customers. The output should be sorted by earliest date first and contain 3 columns date, non-paying downloads, paying downloads.
+
+import pandas as pd
+import numpy as np
+
+df=pd.merge(ms_user_dimension, ms_acc_dimension, how = 'inner',left_on = ['acc_id'], right_on=['acc_id'])
+df1= pd.merge(df, ms_download_facts, how = 'inner',left_on = ['user_id'], right_on=['user_id'])
+x=df1.pivot_table(index=['date'],columns=['paying_customer'],values=['downloads'],aggfunc='sum')
+df2=pd.DataFrame(x.to_records())
+df2.columns = df2.columns.str.replace("[()]","").str.replace("[' ']","").str.replace("[,]","").str.replace("downloads","")
+df3=df2.fillna(0)
+df3['diff'] = df3['no']-df3['yes']
+df4 = df3[df3["diff"] > 0]
+result = df4[["date","no","yes"]].sort_values("date")
