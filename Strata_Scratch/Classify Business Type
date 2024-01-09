@@ -1,0 +1,22 @@
+City of San Francisco
+Medium
+
+Classify each business as either a restaurant, cafe, school, or other.
+
+
+•	A restaurant should have the word 'restaurant' in the business name.
+•	A cafe should have either 'cafe', 'café', or 'coffee' in the business name.
+•	A school should have the word 'school' in the business name.
+•	All other businesses should be classified as 'other'.
+
+
+Output the business name and their classification.
+
+import pandas as pd
+
+result = sf_restaurant_health_violations.iloc[:, :2]
+result['business_type'] = result['business_name'].apply(lambda x: 'school' if 'school' in x.lower() \
+    else 'restaurant' if 'restaurant' in x.lower() \
+    else 'cafe' if 'cafe' in x.lower() or 'coffee' in x.lower() or 'café' in x.lower()
+    else 'other')
+result = result[['business_name', 'business_type']].drop_duplicates()
